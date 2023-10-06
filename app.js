@@ -3,19 +3,7 @@ let bottom = document.querySelector(".bottom");
    let input = document.querySelector("#txt");
    let sendbtn = document.querySelector(".uil-message");
    let ul = document.querySelector("#list_cont");
-   const apiKeys = [
-    '4367aac21cmshccd083dffd7e5efp15d9cfjsn9302e16e0a76',
-    '5b0e331060msh5b7ef31c8f248f9p106d8djsn7d1e8ddd38b7',
-    '79cd07e5damsh16e82764c0d6f5dp1b7cd6jsn17aae8b6f8ef',
-    'd0de5dd3a6mshbed7ca140b05d9fp1e85fajsnea0ca386650f',
-    '632d0c2586msh331b740d201fd31p14eae6jsnf077e781af60',
-    '616da4dcc7msh84336fad16f0bf4p1b34a9jsndc75006a57b1'
-];
-let apiKeyIndex = 0;
-
-function rotateAPIKey() {
-    apiKeyIndex = (apiKeyIndex + 1) % apiKeys.length;
-}
+const api = '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';
     bottom.addEventListener("click",()=>{
         input.focus();
     });
@@ -27,25 +15,17 @@ function rotateAPIKey() {
       }
     });
    function ChatGPT(){
-   const apiKey = apiKeys[apiKeyIndex];
    const options = {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/json',
-            'X-RapidAPI-Key': apiKey,
-            'X-RapidAPI-Host': 'open-ai21.p.rapidapi.com'
-        },
-        body: JSON.stringify({
-            messages: [
-                {
-                role: 'user',
-                content: `${input.value}`
-                }
-            ],
-            web_access: false,
-            stream: false
-        })
-    };
+    method: 'POST',
+    headers: {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + api,
+    },
+    body: JSON.stringify({
+        "model": "gpt-3.5-turbo",
+        "messages": [{ "role": "user", "content": input.value }]
+    })
+    }
        if(input.value!=="" && input.value!==null && input.value.length>0 && input.value.trim()!==""){
 sendbtn.style.background="transparent";       
 let typingAnimationDiv = document.createElement("div");
@@ -69,13 +49,13 @@ for (var i = 0; i < 3; i++) {
          },500);
          input.value="";
          sendbtn.disabled=true;
-      $(".msgs_cont").scrollTop($(".msgs_cont")[0].scrollHeight); fetch('https://open-ai21.p.rapidapi.com/conversationgpt35', options)
+      $(".msgs_cont").scrollTop($(".msgs_cont")[0].scrollHeight); fetch('https://api.openai.com/v1/chat/completions', options)
         .then(res => res.json())
         .then(data => {
         let i = 0;
 const intervalId = setInterval(() => {
-    if (i < data.BOT.length) {
-        li2.textContent += data.BOT[i];
+    if (i < data.choices[0].message.content.length) {
+        li2.textContent += data.choices[0].message.content[i];
         $(".msgs_cont").scrollTop($(".msgs_cont")[0].scrollHeight);
         i++;
     } else {
@@ -86,10 +66,9 @@ ul.appendChild(li2);
 sendbtn.disabled = false;
 $(".msgs_cont").scrollTop($(".msgs_cont")[0].scrollHeight);
         }).catch(error=>{
-            li2.textContent=JSON.stringify(data);
+            li2.textContent=error;
          ul.appendChild(li2);
          $(".msgs_cont").scrollTop($(".msgs_cont")[0].scrollHeight);
-         rotateAPIKey();
         });
    }
    } sendbtn.addEventListener("click",ChatGPT);
