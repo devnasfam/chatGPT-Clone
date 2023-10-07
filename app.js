@@ -85,6 +85,6 @@ You can visit this link: https://platform.openai.com/account/api-keys to create 
    }
    } sendbtn.addEventListener("click",ChatGPT);
 });
-alert(`If the code is showing an error, it's because I've reached my monthly API usage quota.
+/*alert(`If the code is showing an error, it's because I've reached my monthly API usage quota.
 You can visit this link: https://platform.openai.com/account/api-keys to create your own API key. Replace 'api' variable with the API key you generate in line 1: of my JavaScript code. Thank you! Don't forget to upvote and comment.`);
-//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
+//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*/
