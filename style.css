@@ -109,7 +109,7 @@ main .bottom::after {
 }
 main .msgs_cont {
   width: 100%;
-  height: calc(100% - 155px);
+  height: calc(100vh - 155px);
   overflow: auto;
   padding: 10px;
   padding-bottom: 15px;
@@ -130,11 +130,13 @@ main .msgs_cont li {
   color: #f2f2f2;
   word-wrap: break-word;
   overflow: hidden;
+  position:relative;
 }
 main .msgs_cont .schat {
   float: right;
   clear: both;
   margin-bottom: 5px;
+  border-bottom-right-radius:20px;
 }
 main .msgs_cont .rchat {
   float: left;
@@ -142,6 +144,7 @@ main .msgs_cont .rchat {
   margin-bottom: 5px;
   background: linear-gradient(to top right, #11ba91, #0A6E55);
   padding-left: 12px;
+  border-bottom-left-radius:20px;
 }
 
 .typing-animation {
@@ -180,4 +183,4 @@ main .msgs_cont .rchat {
     opacity: 0;
     transform: translateY(0);
   }
-}
+  }
