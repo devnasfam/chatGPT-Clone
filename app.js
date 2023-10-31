@@ -1,4 +1,3 @@
-const api = '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';
 document.addEventListener("DOMContentLoaded", function() {
 let bottom = document.querySelector(".bottom");
    let input = document.querySelector("#txt");
@@ -15,17 +14,6 @@ let bottom = document.querySelector(".bottom");
       }
     });
    function ChatGPT(){
-   const options = {
-    method: 'POST',
-    headers: {
-        'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + api,
-    },
-    body: JSON.stringify({
-        "model": "gpt-3.5-turbo",
-        "messages": [{ "role": "user", "content": input.value }]
-    })
-    }
        if(input.value!=="" && input.value!==null && input.value.length>0 && input.value.trim()!==""){
 sendbtn.style.background="transparent";       
 let typingAnimationDiv = document.createElement("div");
@@ -46,45 +34,29 @@ for (var i = 0; i < 3; i++) {
             ul.appendChild(li2);
             $(".msgs_cont").scrollTop($(".msgs_cont")[0].scrollHeight);
          },500);
-         input.value="";
          sendbtn.disabled=true;
-      $(".msgs_cont").scrollTop($(".msgs_cont")[0].scrollHeight); fetch('https://api.openai.com/v1/chat/completions', options)
-        .then(res => res.json())
+      $(".msgs_cont").scrollTop($(".msgs_cont")[0].scrollHeight); 
+      fetch(`https://WellinformedHeavyBootstrapping.yasirmecom.repl.co/ask?question=users new question :, ${input.value}`)
+      .then(res => res.text())
         .then(data => {
         let i = 0;
 const intervalId = setInterval(() => {
-    try{
-    if (data.choices && data.choices.length > 0 && data.choices[0].message && data.choices[0].message.content) {
-    if (i < data.choices[0].message.content.length) {
-        li2.textContent += data.choices[0].message.content[i];
+    if(i < data.length){
+        li2.textContent += data[i];
         $(".msgs_cont").scrollTop($(".msgs_cont")[0].scrollHeight);
         i++;
-    } else {
-        clearInterval(intervalId);
-    }
     }else{
-        li2.textContent = JSON.stringify(data);
-    }
-    }catch(err){
-        li2.textContent=`Not working because I've reached my monthly API usage quota.
-You can visit this link: https://platform.openai.com/account/api-keys to create your own API key. Replace 'api' variable with the API key you generate in line 1: of my JavaScript code. Thank you! Don't forget to upvote and comment.`;
-        ul.appendChild(li2);
+        clearInterval(intervalId);
+        sendbtn.disabled=false;
     }
 }, 20);
-if(data.choices[0].message.content){
-ul.appendChild(li2);
-sendbtn.disabled = false;
-$(".msgs_cont").scrollTop($(".msgs_cont")[0].scrollHeight);
-}
         }).catch(error=>{
-            li2.textContent=`Not working, because I've reached my monthly API usage quota.
-You can visit this link: https://platform.openai.com/account/api-keys to create your own API key. Replace 'api' variable with the API key you generate in line 1: of my JavaScript code. Thank you! Don't forget to upvote and comment.`;
+            li2.textContent=`Not working`;
          ul.appendChild(li2);
          $(".msgs_cont").scrollTop($(".msgs_cont")[0].scrollHeight);
         });
    }
-   } sendbtn.addEventListener("click",ChatGPT);
+   input.value="";
+   }
+  sendbtn.addEventListener("click",ChatGPT);
 });
-/*alert(`If the code is showing an error, it's because I've reached my monthly API usage quota.
-You can visit this link: https://platform.openai.com/account/api-keys to create your own API key. Replace 'api' variable with the API key you generate in line 1: of my JavaScript code. Thank you! Don't forget to upvote and comment.`);
-//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*/
